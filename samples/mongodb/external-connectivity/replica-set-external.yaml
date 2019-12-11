@@ -7,12 +7,12 @@ spec:
   type: ReplicaSet
 
   members: 3
-  version: 4.2.0
+  version: 4.0.12
 
   opsManager:
     configMapRef:
-      name: my-project
-  credentials: my-credentials
+      name: myconfigmap
+  credentials: ops-manager-admin-key
 
   security:
     tls:
