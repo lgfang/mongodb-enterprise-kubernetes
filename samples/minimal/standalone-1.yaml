@@ -6,7 +6,7 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: my-standalone
+  name: my-standalone1
 spec:
   version: 4.2.1
   type: Standalone
@@ -17,7 +17,7 @@ spec:
 
   opsManager:
     configMapRef:
-      name: myconfigmap
+      name: myconfigmap1
   credentials: ops-manager-admin-key
 
   # This flag allows the creation of pods without persistent volumes. This is for
