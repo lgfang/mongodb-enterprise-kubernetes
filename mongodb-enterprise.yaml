@@ -52,8 +52,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: mongodb-enterprise-operator
 
-  namespace: mongodb
-
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind:  ClusterRole
@@ -62,7 +60,7 @@ subjects:
 - kind: ServiceAccount
   name: mongodb-enterprise-operator
 
-  namespace: mongodb
+  namespace: mongo
 
 
 # This ClusterRole is needed if the user wants to use the Kubernetes CA
@@ -89,7 +87,7 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: mongodb-enterprise-operator-mongodb-certs-binding
-  namespace: mongodb
+  namespace: mongo
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -97,7 +95,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: mongodb-enterprise-operator
-  namespace: mongodb
+  namespace: mongo
 
 
 
@@ -107,7 +105,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: mongodb-enterprise-appdb
 
-  namespace: mongodb
+  namespace: mongo
 
 rules:
   - apiGroups:
@@ -123,7 +121,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: mongodb-enterprise-appdb
 
-  namespace: mongodb
+  namespace: mongo
 
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -133,7 +131,7 @@ subjects:
   - kind: ServiceAccount
     name: mongodb-enterprise-appdb
 
-    namespace: mongodb
+    namespace: mongo
 
 
 ---
@@ -144,7 +142,7 @@ kind: ServiceAccount
 metadata:
   name: mongodb-enterprise-operator
 
-  namespace: mongodb
+  namespace: mongo
 
 
 ---
@@ -153,7 +151,7 @@ kind: ServiceAccount
 metadata:
   name: mongodb-enterprise-appdb
 
-  namespace: mongodb
+  namespace: mongo
 
 ---
 # Source: mongodb-enterprise-operator/templates/operator.yaml
@@ -163,7 +161,7 @@ kind: Deployment
 metadata:
   name: mongodb-enterprise-operator
 
-  namespace: mongodb
+  namespace: mongo
 
 spec:
   replicas: 1

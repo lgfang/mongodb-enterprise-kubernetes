@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: myconfigmap
-  namespace: mongodb
+  namespace: mongo
 data:
   projectName: K8sDemo
-  baseUrl: http://ops-manager-svc.mongodb.svc.cluster.local:8080
+  baseUrl: http://ops-manager-svc.mongo.svc.cluster.local:8080
