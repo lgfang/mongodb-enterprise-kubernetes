@@ -27,3 +27,22 @@ spec:
   # testing only, and must not be used in production. 'false' will disable
   # Persistent Volume Claims. The default is 'true'
   persistent: false
+  configSrvPodSpec:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - gke-om-pool-1-b2c0e4c6-m8zd
+  shardPodSpec:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - gke-om-pool-1-b4f57937-d8z9
+            
