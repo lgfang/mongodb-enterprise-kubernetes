@@ -32,17 +32,17 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: kubernetes.io/hostname
+          - key: failure-domain.beta.kubernetes.io/zone
             operator: In
             values:
-            - gke-om-pool-1-b2c0e4c6-m8zd
+            - us-central1-f
   shardPodSpec:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: kubernetes.io/hostname
+          - key: failure-domain.beta.kubernetes.io/zone
             operator: In
             values:
-            - gke-om-pool-1-b4f57937-d8z9
+            - us-central1-b
             
