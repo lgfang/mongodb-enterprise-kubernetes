@@ -2,19 +2,19 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: my-scram-enabled-replica-set
+  name: my-replica-set
 spec:
   type: ReplicaSet
   members: 3
 
   # Using a version >= 4.0 will enable SCRAM-SHA-256 authentication
   # setting a version < 4.0 will enable SCRAM-SHA-1/MONGODB-CR authentication
-  version: 4.0.4
+  version: 4.2.1
 
   opsManager:
     configMapRef:
-      name: my-project
-  credentials: my-credentials
+      name: myconfigmap
+  credentials: ops-manager-admin-key
 
   security:
     authentication:
@@ -28,3 +28,4 @@ spec:
       # If you need to manage MongoDB users directly via the mongods, set this value to true
       ignoreUnknownUsers: true # default value false
 
+  persistent: false

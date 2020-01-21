@@ -10,7 +10,7 @@ spec:
   username: my-scram-user
   db: admin
   mongodbResourceRef:
-    name: my-scram-enabled-replica-set # The name of the MongoDB resource this user will be added to
+    name: my-replica-set # The name of the MongoDB resource this user will be added to
   roles:
     - db: admin
       name: clusterAdmin
