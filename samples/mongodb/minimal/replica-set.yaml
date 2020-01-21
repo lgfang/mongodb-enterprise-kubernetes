@@ -14,7 +14,7 @@ spec:
 
   opsManager:
     configMapRef:
-      name: my-project
-  credentials: my-credentials
+      name: myconfigmap
+  credentials: ops-manager-admin-key
 
   persistent: false
