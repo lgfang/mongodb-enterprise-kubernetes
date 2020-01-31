@@ -7,12 +7,13 @@ spec:
   replicas: 1
   version: 4.2.4
   adminCredentials: ops-manager-admin-secret
-
+  backup:
+    enabled: false
   # optional, disabled by default. Creates an additional service to make Ops Manager reachable from
   # outside of the Kubernetes cluster.
   externalConnectivity:
     # LoadBalancer|NodePort
-    type: LoadBalancer
+    type: NodePort
     # optional, corresponds to nodePort port
     port: 30100
     # optional
