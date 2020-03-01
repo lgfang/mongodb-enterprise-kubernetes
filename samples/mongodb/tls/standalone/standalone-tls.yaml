@@ -12,7 +12,7 @@ spec:
   credentials: my-credentials
   type: Standalone
 
-  persistent: true
+  persistent: false
 
   # This will create a TLS enabled Standalone which means that the
   # traffic will be encrypted using TLS certificates. These
@@ -25,3 +25,4 @@ spec:
   security:
     tls:
       enabled: true
+      ca: custom-ca

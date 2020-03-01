@@ -1,3 +1,4 @@
+* Connect to Ops Manager web server with TLS
 NOTE: In Ops Manager *Admin > General > Ops Manager Config > Miscellaneous* page,
 *Installer Download Source* Section, set Agents to get the installers from Ops
 Manager server. Otherwise, because agents are configured to use our own CA, they
@@ -16,4 +17,25 @@ k apply -f mongodb-enterprise.yaml
 k create secret generic my-credentials --from-literal="user=SFTEWLYG" --from-literal="publicApiKey=96613e33-7e91-44de-a184-af9ccd974137"
 cp chain.crt mms-ca.crt
 k create configmap mms-svr-ca --from-file=mms-ca.crt
+#+END_EXAMPLE
+
+* Deploy using own CA
+
+#+BEGIN_EXAMPLE
+$ cat ~/projects/ssl-test/tmp_openssl.cnf
+[ usr_cert ]
+subjectAltName = @alternate_names
+extendedKeyUsage = serverAuth,clientAuth
+
+[ alternate_names ]
+DNS.1 = *.my-tls-standalone-svc.mongodb.svc.cluster.local
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+openssl x509 -req -sha256 -CA intermediate-ca.crt -CAkey intermediate-ca.key -in client.csr -out mongod.crt -CAcreateserial -days 800 -extfile ./tmp_openssl.cnf -extensions usr_cert
+cat client.key mongod.crt > mongod.pem
+cp mongod.pem my-tls-standalone-0-pem
+k create secret generic my-tls-standalone-cert --from-file=my-tls-standalone-0-pem
+cp chain.crt ca-pem
+k create configmap custom-ca --from-file=ca-pem
 #+END_EXAMPLE
