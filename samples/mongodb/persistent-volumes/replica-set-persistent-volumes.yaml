@@ -2,7 +2,7 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: my-replica-set
+  name: my-pv-replica-set
 spec:
   members: 3
   version: 4.2.1-ent
@@ -11,7 +11,7 @@ spec:
   # Indicates featureCompatibilityVersion. This attribute will make the data
   # format to persist in a particular version, maybe older, allowing for
   # future downgrades if necessary.
-  featureCompatibilityVersion: "3.6"
+  # featureCompatibilityVersion: "3.6"
 
   # Please Note: The default Kubernetes cluster domain is `cluster.local`.
   # If your cluster has been configured with another domain, you can specify it
@@ -19,13 +19,13 @@ spec:
   # clusterDomain: mycompany.net
 
   opsManager:
-    configMapName:
-      name: my-project
-  credentials: my-credentials
+    configMapRef:
+      name: myconfigmap
+  credentials: ops-manager-admin-key
   type: ReplicaSet
 
   # log level affects the level of logging for the agent. Use DEBUG cautiously as log file size may grow very quickly
-  logLevel: WARN
+  # logLevel: WARN
 
   persistent: true
   podSpec:
