@@ -46,3 +46,11 @@ spec:
         logs:
           storage: 500M
           storageClass: standard
+    podTemplate:
+      spec:
+        securityContext:
+          fsGroup: 2000
+        containers:
+        - name: "mongodb-enterprise-database"
+          securityContext:
+            runAsUser: 2000
