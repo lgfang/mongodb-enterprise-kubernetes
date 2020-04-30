@@ -17,4 +17,14 @@ spec:
       name: myconfigmap
   credentials: ops-manager-admin-key
 
+  security:
+    # tls:
+    #   enabled: true
+    authentication:
+      enabled: true
+      modes: ["SCRAM"]
+
+      # modes: ["SCRAM", "X509"]
+      # internalCluster: "X509"
+
   persistent: false
