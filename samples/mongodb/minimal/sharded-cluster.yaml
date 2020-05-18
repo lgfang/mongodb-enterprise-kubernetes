@@ -10,7 +10,7 @@ metadata:
 spec:
   shardCount: 2
   mongodsPerShardCount: 3
-  mongosCount: 2
+  mongosCount: 1
   configServerCount: 3
   version: 4.2.1-ent
   type: ShardedCluster
@@ -20,8 +20,16 @@ spec:
   # https://docs.opsmanager.mongodb.com/current/tutorial/install-k8s-operator
   opsManager:
     configMapRef:
-      name: my-project
-  credentials: my-credentials
+      name: myconfigmap
+  credentials: ops-manager-admin-key
+
+  security:
+    authentication:
+      enabled: true
+      modes:
+      - SCRAM
+    tls:
+      enabled: true
 
   # This flag allows the creation of pods without persistent volumes. This is for
   # testing only, and must not be used in production. 'false' will disable
