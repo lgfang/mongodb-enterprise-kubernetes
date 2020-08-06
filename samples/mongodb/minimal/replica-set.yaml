@@ -18,3 +18,13 @@ spec:
   credentials: ops-manager-external-admin-key
 
   persistent: false
+
+  podSpec:
+    podTemplate:
+      spec:
+        initContainers:
+        - name: "apply-sysctl-test"
+          image: "busybox:latest"
+          securityContext:
+            privileged: true
+          command: ["sysctl", "-w", "net.ipv4.tcp_keepalive_time=120"]
