@@ -15,6 +15,6 @@ spec:
   opsManager:
     configMapRef:
       name: my-project
-  credentials: my-credentials
+  credentials: ops-manager-external-admin-key
 
   persistent: false
