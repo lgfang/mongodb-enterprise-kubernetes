@@ -28,3 +28,8 @@ spec:
           securityContext:
             privileged: true
           command: ["sysctl", "-w", "net.ipv4.tcp_keepalive_time=120"]
+        - name: "delay-start"
+          image: "busybox:latest"
+          securityContext:
+            privileged: true
+          command: ["sh", "-c", "sleep 120"]
