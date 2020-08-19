@@ -36,7 +36,7 @@ spec:
   # the `additionalMongodConfig` structure. Please find more information here:
   # https://docs.mongodb.com/manual/reference/configuration-options/#net.ssl.mode
 
-  # additionalMongodConfig:
-  #   net:
-  #     ssl:
-  #       mode: "preferSSL"
+  additionalMongodConfig:
+    net:
+      ssl:
+        mode: "allowSSL"

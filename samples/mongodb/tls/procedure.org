@@ -12,8 +12,10 @@ k create secret generic my-tls-enabled-rs-cert \
     --from-file=my-tls-enabled-rs-1-pem \
     --from-file=my-tls-enabled-rs-2-pem
 
+for i in {0,1,2}; do k exec -it my-tls-enabled-rs-${i} -- /var/lib/mongodb-mms-automation/mongodb-linux-x86_64-4.0.4-ent/bin/mongo --ssl --sslCAFile /mongodb-automation/ca.pem --host my-tls-enabled-rs-0.my-tls-enabled-rs-svc.mongodb.svc.cluster.local --quiet --eval 'db.getSiblingDB("admin").runCommand({getParameter:1, "sslMode":1}).sslMode'; done
 # NOTE: 
 # - Deploy the replica set *without* SSL first. Then update the config to enable SSL
+# - When downgrading SSL mode, kill the mongod processes in a rolling fashion should agents stuck
 
 # If the agent failed to download binaries directly from MongoDB
 #
