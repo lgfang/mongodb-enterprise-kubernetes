@@ -1,0 +1,23 @@
+# generating own CA and certs
+
+openssl x509 -req -sha256 -CA intermediate-ca.crt -CAkey intermediate-ca.key -in server.csr -out mongod.crt -CAcreateserial -days 800 -extfile ./openssl.cnf -extensions usr_cert
+cat server.key mongod.crt > mongod.pem
+cp chain.crt ca-pem
+cp mongod.pem my-tls-enabled-rs-0-pem
+cp mongod.pem my-tls-enabled-rs-1-pem
+cp mongod.pem my-tls-enabled-rs-2-pem
+k create configmap custom-ca --from-file=ca-pem
+k create secret generic my-tls-enabled-rs-cert \
+    --from-file=my-tls-enabled-rs-0-pem \
+    --from-file=my-tls-enabled-rs-1-pem \
+    --from-file=my-tls-enabled-rs-2-pem
+
+# NOTE: 
+# - Deploy the replica set *without* SSL first. Then update the config to enable SSL
+
+# If the agent failed to download binaries directly from MongoDB
+#
+# In Ops Manager *Admin > General > Ops Manager Config > Miscellaneous* page,
+# *Installer Download Source* Section, set Agents to get the installers from Ops
+# Manager server. Otherwise, because agents are configured to use our own CA,
+# they will unable to download from MongoDB:
