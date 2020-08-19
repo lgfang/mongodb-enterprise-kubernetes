@@ -12,7 +12,7 @@ spec:
   opsManager:
     configMapRef:
       name: my-project
-  credentials: my-credentials
+  credentials: ops-manager-external-admin-key
 
   # look into `replica-set-persistent-volumes.yaml` for an example on how to use
   # Kubernetes Persistent Volumes in your MDB deployment.
@@ -26,14 +26,17 @@ spec:
   #
   # https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/
   #
-  security:
-    tls:
-      enabled: true
+
+  # security:
+  #   tls:
+  #     enabled: true
+  #     ca: custom-ca
 
   # The default TLS mode is 'requireTLS' but it can be customized using the
   # the `additionalMongodConfig` structure. Please find more information here:
   # https://docs.mongodb.com/manual/reference/configuration-options/#net.ssl.mode
-  additionalMongodConfig:
-    net:
-      ssl:
-        mode: "preferSSL"
+
+  # additionalMongodConfig:
+  #   net:
+  #     ssl:
+  #       mode: "preferSSL"
