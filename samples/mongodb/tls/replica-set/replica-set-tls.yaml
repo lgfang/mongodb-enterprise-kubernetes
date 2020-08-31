@@ -30,6 +30,11 @@ spec:
     tls:
       enabled: true
       ca: custom-ca
+  connectivity:
+    replicaSetHorizons:
+      - "horizon_1": "horizon1.horizon.local:31902"
+      - "horizon_1": "horizon1.horizon.local:31071"
+      - "horizon_1": "horizon1.horizon.local:30862"
 
   # The default TLS mode is 'requireTLS' but it can be customized using the
   # the `additionalMongodConfig` structure. Please find more information here:

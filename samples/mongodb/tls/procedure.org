@@ -1,16 +1,38 @@
 # generating own CA and certs
 
-openssl x509 -req -sha256 -CA intermediate-ca.crt -CAkey intermediate-ca.key -in server.csr -out mongod.crt -CAcreateserial -days 800 -extfile ./openssl.cnf -extensions usr_cert
-cat server.key mongod.crt > mongod.pem
+for i in {0,1,2}; do
+openssl genrsa -out server${i}.key 2048
+openssl req -new -sha256 -key server${i}.key -out server${i}.csr<<EOF
+AU
+NSW
+SYD
+MongoDB
+Servers
+server${i}
+a@b.c
+
+
+EOF
+
+openssl x509 -req -sha256 -CA intermediate-ca.crt -CAkey intermediate-ca.key -in server${i}.csr -out server${i}.crt -CAcreateserial -days 800 -extfile ./openssl-${i}.cnf -extensions usr_cert
+cat server${i}.crt server${i}.key > my-tls-enabled-rs-${i}-pem
+done
+
 cp chain.crt ca-pem
-cp mongod.pem my-tls-enabled-rs-0-pem
-cp mongod.pem my-tls-enabled-rs-1-pem
-cp mongod.pem my-tls-enabled-rs-2-pem
 k create configmap custom-ca --from-file=ca-pem
-k create secret generic my-tls-enabled-rs-cert \
-    --from-file=my-tls-enabled-rs-0-pem \
-    --from-file=my-tls-enabled-rs-1-pem \
-    --from-file=my-tls-enabled-rs-2-pem
+k create secret generic my-tls-enabled-rs-cert --from-file=my-tls-enabled-rs-0-pem --from-file=my-tls-enabled-rs-1-pem --from-file=my-tls-enabled-rs-2-pem
+
+# external access through split horizon
+k expose pod/my-tls-enabled-rs-0 --type="NodePort" --port 27017
+k expose pod/my-tls-enabled-rs-1 --type="NodePort" --port 27017
+k expose pod/my-tls-enabled-rs-2 --type="NodePort" --port 27017
+
+# verify ssl mode
+for i in {0,1,2}; do k exec -it my-tls-enabled-rs-${i} -- /var/lib/mongodb-mms-automation/mongodb-linux-x86_64-4.0.17-ent/bin/mongo --ssl --sslCAFile /mongodb-automation/ca.pem --host my-tls-enabled-rs-0.my-tls-enabled-rs-svc.mongodb.svc.cluster.local --quiet --eval 'db.getSiblingDB("admin").runCommand({getParameter:1, "sslMode":1}).sslMode'; done
+
+# verify certs being used
+$ k get secrets my-tls-enabled-rs-cert -o json | jq -r '.data | with_entries(.value |= @base64d) | .[]' |  sed -n '/BEGIN CERTIFICATE/,/END CERTIFICATE/p' | awk -v cmd='openssl x509 -noout -text'  '/BEGIN/{close(cmd)};{print | cmd}'
+
 
 # NOTE: 
 # - Deploy the replica set *without* SSL first. Then update the config to enable SSL
