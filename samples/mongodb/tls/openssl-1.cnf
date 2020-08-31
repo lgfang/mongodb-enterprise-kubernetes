@@ -1,0 +1,9 @@
+[ usr_cert ]
+subjectAltName = @alternate_names
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth,clientAuth
+
+[ alternate_names ]
+DNS.1 = my-tls-enabled-rs-1.my-tls-enabled-rs-svc.mongodb.svc.cluster.local
+DNS.2 = h1.x.local
+
