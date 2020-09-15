@@ -188,7 +188,7 @@ spec:
       serviceAccountName: enterprise-operator
       containers:
       - name: mongodb-enterprise-operator
-        image: registry.connect.redhat.com/mongodb/enterprise-operator:1.7.0
+        image: quay.io/mongodb/mongodb-enterprise-operator-ubi:1.7.0
         imagePullPolicy: Always
         args:
           - "-watch-resource=mongodb"
@@ -210,20 +210,20 @@ spec:
         - name: MANAGED_SECURITY_CONTEXT
           value: 'true'
         - name: MONGODB_ENTERPRISE_DATABASE_IMAGE
-          value: registry.connect.redhat.com/mongodb/enterprise-database:1.7.0
+          value: quay.io/mongodb/mongodb-enterprise-database-ubi:1.7.0
         - name: IMAGE_PULL_POLICY
           value: Always
         - name: OPS_MANAGER_IMAGE_REPOSITORY
-          value: registry.connect.redhat.com/mongodb/mongodb-enterprise-ops-manager
+          value: quay.io/mongodb/mongodb-enterprise-ops-manager-ubi
         - name: INIT_OPS_MANAGER_IMAGE_REPOSITORY
-          value: registry.connect.redhat.com/mongodb/mongodb-enterprise-init-ops-manager
+          value: quay.io/mongodb/mongodb-enterprise-init-ops-manager-ubi
         - name: INIT_OPS_MANAGER_VERSION
           value: 1.0.1
         - name: INIT_APPDB_IMAGE_REPOSITORY
-          value: registry.connect.redhat.com/mongodb/mongodb-enterprise-init-appdb
+          value: quay.io/mongodb/mongodb-enterprise-init-appdb-ubi
         - name: INIT_APPDB_VERSION
           value: 1.0.2
         - name: OPS_MANAGER_IMAGE_PULL_POLICY
           value: Always
         - name: APPDB_IMAGE_REPOSITORY
-          value: registry.connect.redhat.com/mongodb/mongodb-enterprise-appdb
+          value: quay.io/mongodb/mongodb-enterprise-appdb-ubi

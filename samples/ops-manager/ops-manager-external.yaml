@@ -15,11 +15,11 @@ spec:
 
   # optional. Disabled by default. Creates an additional service to make Ops Manager reachable from
   # outside of the Kubernetes cluster.
-  externalConnectivity:
-    # LoadBalancer|NodePort
-    type: NodePort
-    # optional. Corresponds to NodePort port
-    port: 30100
+  # externalConnectivity:
+  #   # LoadBalancer|NodePort
+  #   type: NodePort
+  #   # optional. Corresponds to NodePort port
+  #   port: 30100
 
   applicationDatabase:
     members: 3
